@@ -3,6 +3,7 @@ import './App.css';
 import AlbumFeature from './features/Album';
 import Counter from './components/Counter';
 import TodoFeature from './features/Todo';
+import { Route, Routes, Link } from 'react-router-dom';
 
 function App() {
   const name = 'Hau';
@@ -63,7 +64,15 @@ function App() {
 
 
       {/* <AlbumFeature /> */}
-      <TodoFeature />
+      {/* <TodoFeature /> */}
+      Home page
+      <Routes>
+        <Route path="/todos" element={<TodoFeature />} />
+        <Route path="/albums" element={<AlbumFeature />} />
+      </Routes>
+      <p><Link to="/todos">Todos</Link></p>
+      <p><Link to="/albums">Albums</Link></p>
+
     </div>
   );
 }

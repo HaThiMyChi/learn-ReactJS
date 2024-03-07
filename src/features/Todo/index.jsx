@@ -26,7 +26,7 @@ function TodoFeature(props) {
     ]
 
     const [todoList, setTodoList] = useState(initTodoList);
-    const [filteredStatus, setFilteredStatis] = useState('all');
+    const [filteredStatus, setFilteredStatus] = useState('all');
     // No duoc nhan la todo, index
     const handleTodoClick = (todo, idx) => {
         // clone current array to the new one (khi lam viec voi object, array phai clone no ra truoc khi update moi)
@@ -54,21 +54,22 @@ function TodoFeature(props) {
     }
 
     const handleShowAllClick = () => {
-        setFilteredStatis('all');
+       
+        setFilteredStatus('all');
     }
 
     const handleShowCompletedClick = () => {
-        setFilteredStatis('completed')
+        setFilteredStatus('completed');
+        console.log('filteredStatus', filteredStatus)
     }
 
     const handleShowNewClick = () => {
-        setFilteredStatis('new');
+        setFilteredStatus('new');
     }
 
     /* Ban đầu nó sẽ lọc theo filtered status all thì nó lấy hết, sau đó mình chọn filter(
         ex: có completed thì trong todo có status đó nó mới render ra)
          */
-
 
     const renderTodoList = todoList.filter(todo => filteredStatus === 'all' || todo.status === filteredStatus);
     
