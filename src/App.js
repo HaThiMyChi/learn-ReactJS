@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import AlbumFeature from './features/Album';
+import Counter from './components/Counter';
+import TodoFeature from './features/Todo';
 
 function App() {
   const name = 'Hau';
@@ -60,7 +62,8 @@ function App() {
       {/* </header> */}
 
 
-      <AlbumFeature />
+      {/* <AlbumFeature /> */}
+      <TodoFeature />
     </div>
   );
 }
