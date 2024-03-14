@@ -11,6 +11,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from "@material-ui/core";
+import PasswordField from "components/form-control/PasswordField";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,17 +41,19 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     }
 }));
+
 RegisterForm.propTypes = {
     onSubmit: PropTypes.func,
 };
 
 function RegisterForm(props) {
     const classes = useStyles();
+    console.log(123)
 
     const schema = yup.object().shape({
-    title: yup.string().required('Please enter title'),
-    
-  });
+        fullName: yup.string().required('Please enter your full name.'),
+        password: yup.string().required('Please enter your password.').min(6, 'Please enter at least 6 characters')
+    });
  
 
     const form = useForm({
@@ -65,6 +68,7 @@ function RegisterForm(props) {
     })
 
     const handleSubmit = (values) => {
+        console.log(values)
         const {onSubmit} = props;
         if (onSubmit) {
             onSubmit(values);
@@ -86,14 +90,15 @@ function RegisterForm(props) {
             <form onSubmit={form.handleSubmit(handleSubmit)}  className={classes.form}>
                 <InputField  name="fullName" label="Full Name" form={form} />
                 <InputField  name="email" label="Email" form={form} />
-                <InputField  name="password" label="Password" form={form} />
-                <InputField  name="retypePassword" label="Retype Password" form={form} />
+                <PasswordField  name="password" label="Password" form={form} />
+                <PasswordField  name="retypePassword" label="Retype Password" form={form} />
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
+
                 >
                     Create an account
                 </Button>

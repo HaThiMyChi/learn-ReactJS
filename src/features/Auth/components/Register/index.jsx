@@ -1,14 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RegisterForm from '../RegisterForm';
+import { useDispatch } from 'react-redux';
+import { register } from 'features/Auth/userSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 Register.propTypes = {
     
 };
 
+
 function Register(props) {
-    const handleSubmit = (values) => {
+    const dispatch = useDispatch();
+
+    const handleSubmit = async (values) => {
         console.log('Form submit: ', values)
+        
+
+        try {
+            // auto set username = email, xem lai file api
+            values.username = values.email;
+            
+            const action = register(values);
+            const resultAction = await dispatch(action);
+            const user = unwrapResult(resultAction);
+            console.log('new user', user)
+        } catch (error) {
+            console.log("Failed to register", error)
+        }
     }
     return (
         <div>

@@ -22,10 +22,10 @@ function InputField(props) {
             control={form.control}
 
             render={({ field }) => <TextField {...field}  
-                label={label} variant="outlined" margin='normal'
+                label={label} variant="outlined" margin='normal' fullWidth
                 />
             }
-            fullWidth
+            
             
             disabled={disabled}
             // error={!!hasError}
