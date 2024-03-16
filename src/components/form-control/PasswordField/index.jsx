@@ -21,7 +21,7 @@ PasswordField.propTypes = {
 
 function PasswordField(props) {
   const { form, name, label, disabled } = props;
-  console.log(props);
+console.log(props);
   const { errors } = form;
   // const hasError = errors[name];
   

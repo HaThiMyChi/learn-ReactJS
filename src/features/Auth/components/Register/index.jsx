@@ -4,14 +4,18 @@ import RegisterForm from '../RegisterForm';
 import { useDispatch } from 'react-redux';
 import { register } from 'features/Auth/userSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { useSnackbar } from 'notistack';
+
 
 Register.propTypes = {
+    closeDialog: PropTypes.func
     
 };
 
 
 function Register(props) {
     const dispatch = useDispatch();
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleSubmit = async (values) => {
         console.log('Form submit: ', values)
@@ -20,13 +24,22 @@ function Register(props) {
         try {
             // auto set username = email, xem lai file api
             values.username = values.email;
-            
+
             const action = register(values);
             const resultAction = await dispatch(action);
             const user = unwrapResult(resultAction);
-            console.log('new user', user)
+            console.log('new user', user);
+            
+            // close dialog
+            const {closeDialog} = props
+            if(closeDialog) {
+                closeDialog();
+            }
+
+            enqueueSnackbar('Successfully register!!!!!', { variant: 'success' });
         } catch (error) {
             console.log("Failed to register", error)
+            enqueueSnackbar(error.message, {variant: 'error'});
         }
     }
     return (
