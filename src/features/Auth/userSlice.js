@@ -31,16 +31,27 @@ export const login = createAsyncThunk(
     },
 );
 
-
+// Then, handle actions in your reducers
 const counterSlice = createSlice({
     name: 'counter',
     initialState: {
-        current: {},
+        current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
         settings: {},
     },
     reducers: {
+        // standard reducer logic, with auto-generated action types per reducer
+        logout(state) {
+            // clear local storage
+            localStorage.removeItem(StorageKeys.USER);
+            localStorage.removeItem(StorageKeys.TOKEN);
+
+            // update state is object null
+            state.current = {};
+        }
     },
     extraReducers: (builder) => {
+        // Add reducers for additional action types here, and handle loading state as needed
+
         // [register.fulfilled] , register no chinh la ham tao o tren const register = createAsyncThunk...
         builder
             .addCase(register.fulfilled, (state, action) => {
@@ -62,5 +73,6 @@ const counterSlice = createSlice({
     // }
 });
 
-const { reducer } = counterSlice;
+const { actions, reducer } = counterSlice;
+export const { logout } = actions;
 export default reducer; //default export

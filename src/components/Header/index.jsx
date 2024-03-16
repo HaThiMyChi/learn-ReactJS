@@ -3,18 +3,22 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import CodeIcon from '@material-ui/icons/Code';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
 import Login from 'features/Auth/components/Login/index';
 import Register from 'features/Auth/components/Register';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { IconButton } from '../../../node_modules/@material-ui/core/index';
 import { Close } from '../../../node_modules/@material-ui/icons/index';
-
+import { logout } from 'features/Auth/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,13 +52,25 @@ const MODE = {
 
 export default function Header() {
   const classes = useStyles();
+  // return về một tham chiếu đến dispatch function từ Redux store và được sử dụng để dispatch các action
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
+  const [anchorEl, setAnchorEl] = useState(null);
+  // useSelector cho phép chúng ta lấy state từ Redux store 
+  const loggedInUser = useSelector(state => state.user.current);
+  const isLoggedIn = !!loggedInUser.id; // neu co id thi dang nhap roi, con chua co thi chua dang nhap
+
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const handleUserClick = (event) => {
+    console.log('current target', event);
+    setAnchorEl(event.currentTarget);
+  }
 
   const handleClose = (event, reason) => {
     if (reason && reason === "backdropClick") {
@@ -62,6 +78,15 @@ export default function Header() {
     }
     setOpen(false);
   };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null)
+  }
+
+  const handleLogoutClick = () => {
+    const action  = logout();
+    dispatch(action);
+  }
 
   return (
     <div className={classes.root}>
@@ -82,11 +107,42 @@ export default function Header() {
             <Button color="inherit">Albums</Button>
           </NavLink>
 
-          <Button color="inherit" onClick={handleClickOpen}>
-            Register
-          </Button>
+        {/* Neu chua dang nhap thi show login */}
+          {!isLoggedIn && (
+            <Button color="inherit" onClick={handleClickOpen}>
+              Login
+            </Button>
+          )}
+
+          {/* Dang nhap roi thi show icon login */}
+          {isLoggedIn && (
+            <IconButton color="inherit" onClick={handleUserClick}>
+              <AccountCircleIcon />
+            </IconButton>
+          )} 
+          
         </Toolbar>
       </AppBar>
+
+      <Menu
+        keepMounted
+        anchorEl={anchorEl}
+        getContentAnchorEl={null}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}>
+          
+        <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+        <MenuItem onClick={handleCloseMenu} onClick={handleLogoutClick}>Logout</MenuItem>
+      </Menu>
+
 
       <Dialog
         disableEscapeKeyDown
