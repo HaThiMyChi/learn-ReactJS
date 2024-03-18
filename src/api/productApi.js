@@ -1,30 +1,34 @@
 import axiosClient from "./axiosClient";
 
 const ProductApi = {
-    getAll(params) {
-        const url = '/products';
-        return axiosClient.get(url, { params })
+    async getAll(params) {
+        // Transform _page to start
+        const newParams = { ...params };
+        newParams._start = !params.page || params._page <= 1
+            ? 0
+            : (params._page - 1) * (params._limit) || 50;
+
+        console.log('newParams', newParams)
+
+        // Remove un-needed key (no tinh toan xong cai start, thi no remove cai _page minh truyen xuong)
+        delete newParams._page;
+
+        // Fetch product list + count
+        const productList = await axiosClient.get('/products', { params: newParams });
+        const count = await axiosClient.get('/products/count', { params: newParams });
+
+        // Build respose and return
+        return {
+            data: productList,
+            pagination: {
+                page: params._page,
+                limit: params._limit,
+                total: count
+            }
+        };
     },
 
-    get(id) {
-        const url = `/products/${id}`;
-        return axiosClient.get(url)
-    },
 
-    add(data) {
-        const url = '/products';
-        return axiosClient.post(url, data);
-    },
-
-    update(data) {
-        const url = `/products/${data.id}`;
-        return axiosClient.patch(url, data)
-    },
-
-    remove(id) {
-        const url = `/products/${id}`;
-        return axiosClient.delete(url)
-    }
 };
 
 export default ProductApi;

@@ -8,6 +8,8 @@ import AlbumFeature from 'features/Album';
 import CounterFeature from 'features/Counter';
 import { Button } from '../node_modules/@material-ui/core/index';
 import { useSnackbar } from 'notistack';
+import ProductFeature from 'features/Product/index';
+import ListPage from 'features/Product/pages/ListPage';
 
 function App() {
   useEffect(() => {
@@ -48,6 +50,9 @@ function App() {
         {/* <Route path="/" exact element={<TodoFeature />} /> */}
         <Route path="/todos" element={<TodoFeature />} />
         <Route path="/albums" element={<AlbumFeature />} />
+        <Route path="/products" element={<ProductFeature />} />
+        <Route path="/products/:productId" element={<ListPage />} />
+        {/* <Route path="/productss" element={<ListPage />} /> */}
         {/* </Routes> */}
         {/* <p><Link to="/todos">Todos</Link></p>
       <p><Link to="/albums">Albums</Link></p> */}
