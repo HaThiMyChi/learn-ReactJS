@@ -1,7 +1,6 @@
-import React from 'react';
+import { Box, Grid } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
-import { Box, Container, Grid, Paper, makeStyles } from '@material-ui/core';
-import {Skeleton} from '@material-ui/lab';
 
 ProductSkeletonList.propTypes = {
     length: PropTypes.number,
@@ -22,7 +21,7 @@ function ProductSkeletonList({length}) {
                             <Skeleton />
                             <Skeleton width="60%" />
                         </Box>
-                        
+
                     </Grid>
                 })}
             </Grid>

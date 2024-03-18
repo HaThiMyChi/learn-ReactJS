@@ -4,7 +4,7 @@ const ProductApi = {
     async getAll(params) {
         // Transform _page to start
         const newParams = { ...params };
-        newParams._start = !params.page || params._page <= 1
+        newParams._start = !params._page || params._page <= 1
             ? 0
             : (params._page - 1) * (params._limit) || 50;
 
