@@ -24,21 +24,15 @@ function ProductFilters({filters, onChange}) {
         onChange(newFilters);
     };
 
-    // const handlePriceChange = (newPrice) => {
-    //     if(!onChange) return;
-
-    //     const newFilters = {
-    //         ...filters,
-    //         categoryId: newCategoryId,
-    //     };
-
-    //     onChange(newFilters);
-    // };
+    const handlePriceChange = (value) => {
+        console.log('value price', value)
+        if (onChange) onChange(value);
+    };
 
     return (
         <Box>
             <FilterByCategory  onChange={handleCategoryChange} />
-            {/* <FilterByPrice onChange={handlePriceChange} /> */}
+            <FilterByPrice onChange={handlePriceChange} />
         </Box>
     );
 }
