@@ -5,6 +5,7 @@ import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import { Pagination } from '@material-ui/lab';
 import ProductSort from '../components/ProductSort';
+import ProductFilters from '../components/ProductFilters';
 
 ListPage.propTypes = {
     
@@ -57,7 +58,7 @@ function ListPage(props) {
                 
                 setProductsList(data);
                 setPagination(pagination);
-                console.log('data api 111', data, pagination);
+
             } catch (error) {
                 console.log('Failed to fetch product list: ', error)
             }
@@ -89,13 +90,26 @@ function ListPage(props) {
         ))
     };
 
+    const handleFiltersChange = (newFilters) => {
+        setFilters(prevFilters => (
+            {
+                // giu lai nhung tham so filter truoc do
+                ...prevFilters,
+                // Nhieu cai filters thay doi nen lay het newFilters luon (nó kết hợp với tất cả những giá trị filter mới mà thằng con nó bao lên)
+                ...newFilters
+            }
+        ));
+    }
+
     return (
         <div>
             <Box className={classes.paddingBox}>
                 <Container>
                     <Grid container spacing={1}>
                         <Grid item className={classes.left}>
-                            <Paper elevation={0}>Left column</Paper>
+                            <Paper elevation={0}>
+                                <ProductFilters filters={filters} onChange={handleFiltersChange} />
+                            </Paper>
                         </Grid>
                         <Grid item className={classes.right}>
                             

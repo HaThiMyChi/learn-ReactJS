@@ -11,7 +11,6 @@ ProductList.defaultProps = {
 }
 
 function ProductList({data}) {
-    console.log('data.....', data)
 
     return (
         <Box>

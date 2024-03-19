@@ -8,8 +8,6 @@ const ProductApi = {
             ? 0
             : (params._page - 1) * (params._limit) || 50;
 
-        console.log('newParams', newParams)
-
         // Remove un-needed key (no tinh toan xong cai start, thi no remove cai _page minh truyen xuong)
         delete newParams._page;
 

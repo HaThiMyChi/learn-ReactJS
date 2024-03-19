@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 function Product({product}) {
     const classes = useStyles();
     const thumbnaiUrl = product.thumbnail ? `${STATIC_HOST}${product.thumbnail?.url}` : THUMBNAI_PLACEHOLDER
-    console.log('product 11111', product)
+
     return (
         <Box padding={1}> 
             <Box padding={1} className={classes.img}>
