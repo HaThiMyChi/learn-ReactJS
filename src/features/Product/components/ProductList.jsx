@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Product from '../components/Product';
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import { Pagination } from '@material-ui/lab';
+import ProductSort from '../components/ProductSort';
 
 ListPage.propTypes = {
     
@@ -22,6 +23,14 @@ const useStyles = makeStyles(theme => ({
 
     paddingBox: {
         paddingTop: '32px'
+    },
+
+    pagination: {
+        display: 'flex',
+        flexFlow: 'row nowrap',
+        justifyContent: 'center',
+        marginTop: '20px',
+        paddingBottom: '10px'
     }
 }));
 
@@ -29,14 +38,15 @@ function ListPage(props) {
     const classes = useStyles();
     const [productsList, setProductsList] = useState();
     const [pagination, setPagination] = useState({
-        limit: 10,
+        limit: 9,
         total: 10,
         page: 1
     });
     const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState({
         _page: 1, 
-        _limit: 10
+        _limit: 9,
+        _sort: 'salePrice:ASC'
     })
 
 
@@ -55,16 +65,30 @@ function ListPage(props) {
         })();
     }, [filters]);
 
+    // Khi ma state filters thay doi thi trigger thay doi, no chay lai useEffect nay (goi lai api)
+
     const handlePageChange = (e, page) => {
         setFilters(prevFilters => (
             {
-                // giu lai nhung filter truoc do
+                // giu lai nhung tham so filter truoc do
                 ...prevFilters,
                 // doi cai page sang page moi
                 _page: page
             }
         ))
-    }
+    };
+
+    const handleSortChange = (newValue) => {
+        setFilters(prevFilters => (
+            {
+                // giu lai nhung tham so filter truoc do
+                ...prevFilters,
+                // khi ma co sort thay doi, thì mình đổi lại giá trị sort này = newValue mới
+                _sort: newValue
+            }
+        ))
+    };
+
     return (
         <div>
             <Box className={classes.paddingBox}>
@@ -74,14 +98,20 @@ function ListPage(props) {
                             <Paper elevation={0}>Left column</Paper>
                         </Grid>
                         <Grid item className={classes.right}>
+                            
                             <Paper elevation={0}>
-                                {loading ? <ProductSkeletonList/> : <ProductList data={productsList} />}
+                                <ProductSort currentSort={filters._sort} onChange={handleSortChange} />
 
-                                <Pagination color="primary" 
-                                    count={Math.ceil(pagination.total / pagination.limit)} 
-                                    page={pagination.page} 
-                                    onChange={handlePageChange}>
-                                </Pagination>
+                                {loading ? <ProductSkeletonList length={9}/> : <ProductList data={productsList} />}
+
+                                <Box className={classes.pagination}>
+                                    <Pagination color="primary" 
+                                        count={Math.ceil(pagination.total / pagination.limit)} 
+                                        page={pagination.page} 
+                                        onChange={handlePageChange}>
+                                    </Pagination>
+                                </Box>
+                                
                             </Paper>
                             
                             
