@@ -6,6 +6,7 @@ import ProductSkeletonList from '../components/ProductSkeletonList';
 import { Pagination } from '@material-ui/lab';
 import ProductSort from '../components/ProductSort';
 import ProductFilters from '../components/ProductFilters';
+import FilterViewer from '../components/FilterViewer';
 
 ListPage.propTypes = {
     
@@ -47,7 +48,8 @@ function ListPage(props) {
     const [filters, setFilters] = useState({
         _page: 1, 
         _limit: 9,
-        _sort: 'salePrice:ASC'
+        _sort: 'salePrice:ASC',
+
     })
 
 
@@ -99,6 +101,10 @@ function ListPage(props) {
                 ...newFilters
             }
         ));
+    };
+
+    const setNewFilters = (newFilters) => {
+        setFilters(newFilters);
     }
 
     return (
@@ -115,6 +121,7 @@ function ListPage(props) {
                             
                             <Paper elevation={0}>
                                 <ProductSort currentSort={filters._sort} onChange={handleSortChange} />
+                                <FilterViewer filters={filters} onChange={setNewFilters} />
 
                                 {loading ? <ProductSkeletonList length={9}/> : <ProductList data={productsList} />}
 
