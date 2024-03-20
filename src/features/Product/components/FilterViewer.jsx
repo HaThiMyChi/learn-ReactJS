@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Box, makeStyles, Chip} from '@material-ui/core';
+import { useMemo } from 'react';
 
 FilterViewer.propTypes = {
     filters: PropTypes.object,
@@ -83,12 +84,20 @@ const FILTER_LIST = [
     // },
 ];
 
+
+
 function FilterViewer({filters = {}, onChange = null}) {
     const classes = useStyles();
 
+    // Call useMemo at the top level of your component to cache a calculation between re-renders
+    // neu filters nay ko thay doi thi no ko tinh lai, nguoc lai
+    const visibleFilters = useMemo(() => {
+        return FILTER_LIST.filter((x) => x.isVisible(filters));
+    }, [filters]);
+
     return (
       <Box component="ul" className={classes.root}>
-        {FILTER_LIST.filter((x) => x.isVisible(filters)).map((x) => (
+        {visibleFilters.map((x) => (
           <li key={x.id}>
             <Chip
               size="small"
