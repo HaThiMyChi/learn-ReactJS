@@ -77,7 +77,7 @@ function LoginForm(props) {
 
 
   const onHandleSubmit = async(values) => {
-    console.log("values", values);
+
     const {onSubmit} = props;
 
     if (onSubmit) {
@@ -87,7 +87,7 @@ function LoginForm(props) {
     form.reset();
   };
 
-//   console.log("form.formState", form);
+
   const { isSubmitting } = form.formState;
 
   return (

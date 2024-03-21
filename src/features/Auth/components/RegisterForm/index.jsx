@@ -80,7 +80,7 @@ function RegisterForm(props) {
 
 
   const onHandleSubmit = async(values) => {
-    console.log("values", values);
+
     const {onSubmit} = props;
 
     if (onSubmit) {
@@ -90,7 +90,7 @@ function RegisterForm(props) {
     form.reset();
   };
 
-//   console.log("form.formState", form);
+
   const { isSubmitting } = form.formState;
 
   return (

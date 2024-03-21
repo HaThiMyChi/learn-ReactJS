@@ -68,7 +68,7 @@ export default function Header() {
   };
 
   const handleUserClick = (event) => {
-    console.log('current target', event);
+
     setAnchorEl(event.currentTarget);
   }
 

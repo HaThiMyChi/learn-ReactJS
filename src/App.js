@@ -10,6 +10,7 @@ import { Button } from '../node_modules/@material-ui/core/index';
 import { useSnackbar } from 'notistack';
 import ProductFeature from 'features/Product/index';
 import ListPage from 'features/Product/pages/ListPage';
+import DetailPage from 'features/Product/pages/DetailPage';
 
 function App() {
   useEffect(() => {
@@ -51,7 +52,7 @@ function App() {
         <Route path="/todos" element={<TodoFeature />} />
         <Route path="/albums" element={<AlbumFeature />} />
         <Route path="/products" element={<ProductFeature />} />
-        <Route path="/products/:productId" element={<ListPage />} />
+        <Route path="/products/:productId" element={<DetailPage />} />
         {/* <Route path="/productss" element={<ListPage />} /> */}
         {/* </Routes> */}
         {/* <p><Link to="/todos">Todos</Link></p>

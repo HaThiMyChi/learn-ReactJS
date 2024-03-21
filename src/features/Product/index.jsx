@@ -1,6 +1,9 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation} from 'react-router-dom';
 // import { useMatch } from "react-router-dom";
 import {Box} from '@material-ui/core'
+import { Route, Routes } from 'react-router-dom';
+import ListPage from './pages/ListPage';
+import DetailPage from './pages/DetailPage';
 
 
 ProductFeature.propTypes = {
@@ -8,17 +11,19 @@ ProductFeature.propTypes = {
 };
 
 function ProductFeature(props) {
+    const currentPath = useLocation().pathname;
     // const match = useMatch('/products');
-    // console.log('match', match)
+
     const { productId} = useParams()
-    console.log("123", productId)
+
     return (
         <Box>
-            {/* Product feature
+            Product feature
             <Routes>
-                <Route path='/products' element={<ListPage />}/>
-            </Routes> */}
-            <Link to={`/products/${productId}`}>Product A</Link>
+                <Route path='/' element={<ListPage />}/>
+                {/* <Route path={`/:productId`} element={<DetailPage />}/> */}
+            </Routes>
+            {/* <Link to={`/products/${productId}`}>Product A</Link> */}
             {/* <ListPage /> */}
         </Box>
     );

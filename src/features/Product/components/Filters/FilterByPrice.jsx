@@ -38,7 +38,6 @@ function FilterByPrice({onChange}) {
     });
 
     const handleSubmit = () => {
-        console.log('value submit price', values)
         if (onChange) onChange(values);
 
         // Khi minh submit xong thi reset lai value

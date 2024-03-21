@@ -32,7 +32,6 @@ function ListPage(props) {
     const [todoList, setTodoList] = useState(initTodoList);
     const [filteredStatus, setFilteredStatus] = useState(() => {
         const param = queryString.parse(location.search);
-        console.log(param);
 
         return 'all';
     });
@@ -40,8 +39,6 @@ function ListPage(props) {
     const handleTodoClick = (todo, idx) => {
         // clone current array to the new one (khi lam viec voi object, array phai clone no ra truoc khi update moi)
         const newTodoList = [...todoList];
-
-        console.log(todo, idx)
         // Cach 1
         // toggle state
         // const newTodo = {
@@ -69,7 +66,7 @@ function ListPage(props) {
 
     const handleShowCompletedClick = () => {
         setFilteredStatus('completed');
-        console.log('filteredStatus', filteredStatus)
+
     }
 
     const handleShowNewClick = () => {
@@ -83,7 +80,7 @@ function ListPage(props) {
     const renderTodoList = todoList.filter(todo => filteredStatus === 'all' || todo.status === filteredStatus);
     
     const handleTodoFormSubmit = (values) => {
-        console.log('Form submit: ', values);
+
         const newTodo = {
             id: TodoList.length + 1,
             title: values.title,
