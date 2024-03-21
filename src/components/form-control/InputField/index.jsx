@@ -11,25 +11,35 @@ InputField.propTypes = {
 };
 
 function InputField(props) {
+    console.log('run here')
     const {form, name, label, disabled} = props;
-    const {errors, formState} = form;
-    // const hasError = formState.touchedFields[name] && errors[name];
-
+    const { formState} = form;
+    const hasError = formState.errors[`${name}`];
+    console.log('dasdsd',formState.errors[`${name}`])
     return (
         <Controller 
             name={name}
             control={form.control}
 
+            // render={({ field: { onChange, onBlur, value, ref, name } }) => (
+            //     <TextField 
+            //         margin="normal"
+            //         variant="outlined"
+            //         fullWidth
+            //         label={label}
+            //         onBlur={onBlur}
+            //         value={value}
+            //         disabled={disabled}
+            //         // error={!!hasError}
+            //         helperText={formState.errors[`${name}`]?.message}
+            //     />
+            // )}
             render={({ field }) => <TextField {...field}  
                 label={label} variant="outlined" margin='normal' fullWidth
+                error={!!hasError}
+                helperText={formState.errors[`${name}`]?.message}
                 />
             }
-            
-            
-            disabled={disabled}
-            // error={!!hasError}
-            // helperText={errors[name]?.message}
-           
         
         />
     );
