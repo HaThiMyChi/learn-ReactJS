@@ -2,14 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Container, Grid, Paper, makeStyles } from '@material-ui/core';
 import ProductThumbnail from '../components/ProductThumbnail';
-import { useParams  } from "react-router-dom";
+import { useParams, Routes, Route, useLocation , Outlet} from "react-router-dom";
 import useProductDetail from '../hooks/useProductDetail';
 import ProductInfo from '../components/ProductInfo';
 import AddToCartForm from '../components/AddToCartForm';
 import ProductMenu from '../components/ProductMenu';
+import ProductReviews from '../components/ProductReviews';
+import ProductDescription from '../components/ProductDescription';
+import ProductAditional from '../components/ProductAditional';
+import { LinearProgress } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-    root: {},
+    root: {
+        paddingTop: '32px',
+        paddingBottom: theme.spacing(3)
+    },
 
     left: {
         width: '400px',
@@ -25,6 +32,13 @@ const useStyles = makeStyles(theme => ({
     paddingBox: {
         paddingTop: '32px'
     },
+
+    loading: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+    }
 }));
 
 DetailPage.propTypes = {
@@ -34,14 +48,16 @@ DetailPage.propTypes = {
 function DetailPage(props) {
     const classes = useStyles();
     const params = useParams();
+    const location = useLocation();
     const productId = params.productId;
 
     const {product, loading} = useProductDetail(productId);
 
     if (loading) {
         // TODO: Make this beautiful
-        return <Box>
-            Loading
+        return <Box className={classes.loading}>
+            {/* Loading */} <LinearProgress/>
+
         </Box>
     }
 
@@ -49,8 +65,10 @@ function DetailPage(props) {
         console.log('Form submit', formValues);
     }
 
+    console.log('hhhhhh',location.pathname)
+
     return (
-        <Box className={classes.paddingBox}>
+        <Box className={classes.root}>
             <Container>
                 <Paper elevation={0}>
                     <Grid container>
@@ -63,8 +81,9 @@ function DetailPage(props) {
                         </Grid>
                     </Grid>
                 </Paper>
-
-                <ProductMenu />
+                
+                <ProductMenu product={product}/>
+            
             </Container>
             
         </Box>

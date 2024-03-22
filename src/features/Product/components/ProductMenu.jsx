@@ -1,58 +1,88 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, makeStyles } from '@material-ui/core';
-import { Link, NavLink, useLocation} from 'react-router-dom';
+import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import ProductDescription from './ProductDescription';
+import ProductAditional from './ProductAditional';
+import ProductReviews from './ProductReviews';
+import PropTypes from 'prop-types';
 
 ProductMenu.propTypes = {
-    
+    product: PropTypes.object,
 };
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexFlow: 'row nowrap',
-        justifyContent: 'center',
-        alignItem: 'center',
-        padding: 0,
-        listStyleType: 'none',
+  root: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+    listStyleType: 'none',
 
-        '& > li' : {
-            padding: theme.spacing(2, 4)
-        },
+    '& > li': {
+      padding: theme.spacing(2, 4),
+    },
 
-        '& > li > a': {
-            color: theme.palette.grey[700],
-        },
+    '& > li > a': {
+      color: theme.palette.grey[700],
+      textDecoration: 'none',
+    },
 
-        '& > li > a.active': {
-            color: theme.palette.primary.main,
-            textDecoration: 'underline',
-            fontWeight: 'bold'
-        }
-    }
-}))
+    '& > li > a:active': {
+      color: theme.palette.primary.main,
+      textDecoration: 'underline',
+      fontWeight: 'bold',
+    },
+  },
+}));
 
-function ProductMenu(props) {
-    const url = useLocation();
-    const classes = useStyles();
+function ProductMenu({product = {}, props}) {
 
-    console.log('param menu', url)
+  const location = useLocation();
+  const classes = useStyles();
 
-    return (
-        <Box component="ul" className={classes.root}>
-            <li>
-                <Link component={NavLink} to={url.pathname} exact>Description</Link>
-            </li>
+  console.log('param product', product);
 
-            <li>
-                <Link component={NavLink} to={`${url.pathname}/additional`} exact>Additional Information</Link>
-            </li>
+  return (
+    <Box component="ul" className={classes.root}>
+      <li>
+        <NavLink
+            exact
+            to={`${location.pathname}`}
+            className="nav__link"
+            activeClassName="nav__link--active">
+            Description
+        </NavLink>
+      </li>
 
-            <li>
-                <Link component={NavLink} to={`${url.pathname}/reviews`} exact>Reviews</Link>
-            </li>
-        </Box>
-    );
+      <li>
+        <NavLink
+          exact
+          to={`${location.pathname}/additional`}
+          className="nav__link"
+          activeClassName="nav__link--active"
+        >
+          Additional Information
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+              exact
+              to={`${location.pathname}/reviews`}
+              className="nav__link"
+              activeClassName="nav__link--active"
+        >
+            Reviews
+        </NavLink>
+      </li>
+
+        <Routes>
+            <Route path={`/${location.pathname}`} element={<ProductDescription product={product} />} />
+            <Route path={`${location.pathname}/additional`} element={<ProductAditional />} />
+            <Route path={`${location.pathname}/reviews`} element={<ProductReviews />} />
+        </Routes>
+    </Box>
+  );
 }
 
 export default ProductMenu;

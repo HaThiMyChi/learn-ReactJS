@@ -11,6 +11,8 @@ import { useSnackbar } from 'notistack';
 import ProductFeature from 'features/Product/index';
 import ListPage from 'features/Product/pages/ListPage';
 import DetailPage from 'features/Product/pages/DetailPage';
+import ProductDescription from 'features/Product/components/ProductDescription';
+import CartFeature from 'features/Cart/index';
 
 function App() {
   useEffect(() => {
@@ -52,7 +54,11 @@ function App() {
         <Route path="/todos" element={<TodoFeature />} />
         <Route path="/albums" element={<AlbumFeature />} />
         <Route path="/products" element={<ProductFeature />} />
-        <Route path="/products/:productId" element={<DetailPage />} />
+        <Route path="/products/:productId" element={<DetailPage />} >
+          {/* <Route path={`description`} element={<ProductDescription />} /> */}
+        </Route>
+        <Route path="/cart" element={<CartFeature />} />
+
         {/* <Route path="/productss" element={<ListPage />} /> */}
         {/* </Routes> */}
         {/* <p><Link to="/todos">Todos</Link></p>
