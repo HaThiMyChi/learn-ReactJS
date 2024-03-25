@@ -40,6 +40,7 @@ const cartSlice = createSlice({
         removeFromCart(state, action) {
             const idNeedToRemove = action.payload;  // id muon remove
             // tra ve mang moi roi minh set nguoc lai cho cartItem, do minh khoi tao no object nen minh ko can clone moi du lieu ra
+            // no set lai gia tri khac cai id da remove vo trong cartItem 
             state.cartItems = state.cartItems.filter((x) => x.id !== idNeedToRemove);
 
         },
@@ -48,5 +49,5 @@ const cartSlice = createSlice({
 });
 
 const { actions, reducer } = cartSlice;
-export const { showMiniCart, hideMiniCart } = actions; // named export
+export const { showMiniCart, hideMiniCart, addToCart, setQuantity, removeFromCart } = actions; // named export
 export default reducer; //default export

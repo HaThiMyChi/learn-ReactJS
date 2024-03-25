@@ -1,16 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Container, Grid, Paper, makeStyles } from '@material-ui/core';
-import ProductThumbnail from '../components/ProductThumbnail';
-import { useParams, Routes, Route, useLocation , Outlet} from "react-router-dom";
-import useProductDetail from '../hooks/useProductDetail';
-import ProductInfo from '../components/ProductInfo';
+import { Box, Container, Grid, LinearProgress, Paper, makeStyles } from '@material-ui/core';
+import { addToCart } from 'features/Cart/cartSlice';
+import { useDispatch } from 'react-redux';
+import { useLocation, useParams } from "react-router-dom";
 import AddToCartForm from '../components/AddToCartForm';
+import ProductInfo from '../components/ProductInfo';
 import ProductMenu from '../components/ProductMenu';
-import ProductReviews from '../components/ProductReviews';
-import ProductDescription from '../components/ProductDescription';
-import ProductAditional from '../components/ProductAditional';
-import { LinearProgress } from '@material-ui/core';
+import ProductThumbnail from '../components/ProductThumbnail';
+import useProductDetail from '../hooks/useProductDetail';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -48,7 +44,10 @@ DetailPage.propTypes = {
 function DetailPage(props) {
     const classes = useStyles();
     const params = useParams();
-    const location = useLocation();
+    const location = useLocation(); 
+    // dispatch 1 action len product
+    const  dispatch = useDispatch();
+
     const productId = params.productId;
 
     const {product, loading} = useProductDetail(productId);
@@ -63,9 +62,16 @@ function DetailPage(props) {
 
     const handleAddToCartSubmit = (formValues) => {
         console.log('Form submit', formValues);
+        // CAI PAYLOAD LA OBJECT MINH TRUYEN VAO
+        const action = addToCart({
+            id: product.id,
+            product,
+            quantity: formValues.quantity
+        });
+        console.log('dispatch action', action)
+        dispatch(action);
     }
 
-    console.log('hhhhhh',location.pathname)
 
     return (
         <Box className={classes.root}>
