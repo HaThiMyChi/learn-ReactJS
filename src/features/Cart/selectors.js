@@ -9,12 +9,12 @@ const cartItemsSelector = (state) => state.cart.cartItems;
 export const cartItemsCountSelector = createSelector(
     cartItemsSelector,
     // lay cai count cua buoc truoc do + voi item.quantity
-    (cartItems) => cartItems.redux((count, item) => count + item.quantity, 0)
+    (cartItems) => cartItems.reduce((count, item) => count + item.quantity, 0)
 )
 
 // Caculate total of cart
 export const cartTotalCountSelector = createSelector(
     cartItemsSelector,
     // lay cai count cua buoc truoc do + voi item.quantity
-    (cartItems) => cartItems.redux((total, item) => total + (item.product.salePrice * item.quantity), 0)
+    (cartItems) => cartItems.reduce((total, item) => total + (item.product.salePrice * item.quantity), 0)
 )
