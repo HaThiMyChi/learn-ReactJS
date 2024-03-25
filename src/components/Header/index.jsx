@@ -13,12 +13,16 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
 import Login from 'features/Auth/components/Login/index';
 import Register from 'features/Auth/components/Register';
+import Badge from '@material-ui/core/Badge';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { IconButton } from '../../../node_modules/@material-ui/core/index';
 import { Close } from '../../../node_modules/@material-ui/icons/index';
 import { logout } from 'features/Auth/userSlice';
+import { cartItemsCountSelector } from 'features/Cart/selectors';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +58,7 @@ export default function Header() {
   const classes = useStyles();
   // return về một tham chiếu đến dispatch function từ Redux store và được sử dụng để dispatch các action
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
@@ -62,6 +67,7 @@ export default function Header() {
   const loggedInUser = useSelector(state => state.user.current);
   const isLoggedIn = !!loggedInUser.id; // neu co id thi dang nhap roi, con chua co thi chua dang nhap
 
+  const cartItemsCount = useSelector(cartItemsCountSelector);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,6 +94,11 @@ export default function Header() {
     dispatch(action);
   }
 
+  const handleCartClick = () => {
+    navigate('/cart');
+  }
+
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -113,6 +124,13 @@ export default function Header() {
               Login
             </Button>
           )}
+
+          <IconButton aria-label="show 4 new mails" color="inherit" onClick={handleCartClick}>
+            <Badge badgeContent={cartItemsCount} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+
 
           {/* Dang nhap roi thi show icon login */}
           {isLoggedIn && (
